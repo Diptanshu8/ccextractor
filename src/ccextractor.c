@@ -552,9 +552,12 @@ void call_from_python_api(struct ccx_s_options *api_options)
 #if defined(PYTHONAPI)
 void run(PyObject * reporter, char * line, int encoding)
 {
-       assert ( PyFunction_Check(reporter) );
+       const char* attribute = "callback";
+       assert (PyObject_HasAttrString(reporter,attribute));
+       PyObject* callback=PyObject_GetAttrString(reporter,attribute); 
+       assert ( PyMethod_Check(callback) );
        PyObject* args = Py_BuildValue("(si)",line,encoding);
-       PyObject_CallObject((PyObject*)reporter, args);
+       PyObject_CallObject((PyObject*)callback, args);
 }
 #endif
 
