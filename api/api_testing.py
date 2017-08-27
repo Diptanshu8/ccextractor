@@ -15,6 +15,7 @@ def templer(cb):
     #very mandatory for keeping a track of pythonapi call. Always must be set.
     c = callback_class()
     cc.my_pythonapi(s,cb )
+    #cc.my_pythonapi(s,callback )
     
     compile_ret = cc.compile_params(s,len(sys.argv[1:]));
     
@@ -25,10 +26,9 @@ def templer(cb):
 
 class callback_class(object):
     def callback(self, line, encoding):
-        print line
         api_support.generate_output_srt(line,str(encoding))
-#def callback(line, encoding):
-#    api_support.generate_output_srt(line, str(encoding))
+def callback(line, encoding):
+    api_support.generate_output_srt(line, str(encoding))
 if __name__=="__main__":
     cb = callback_class()
     templer(cb)
